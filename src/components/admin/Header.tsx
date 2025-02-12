@@ -76,7 +76,7 @@ const AdminHeader = () => {
           <VStack align="stretch">
             { announcements && announcements.length > 0 ? (
               announcements.map((announcement) => (
-                <HStack key={announcement._id} justify="space-between" px={3} py={1} bg="gray.700/30" borderRadius="md">
+                <HStack key={announcement.title} justify="space-between" px={3} py={1} bg="gray.700/30" borderRadius="md">
                   <Text className="text-white text-xl">{announcement.title} - {announcement.date}</Text>
                   <IconButton
                     aria-label="Delete announcement"
