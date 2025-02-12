@@ -12,6 +12,7 @@ const chalkFont = Cabin_Sketch({
   display: "swap",
 });
 import "./cube.css"
+import { AnnouncementType, getannouncements } from "@/lib/api";
 const pat = Patrick_Hand({
     weight:'400',
     subsets:['latin']
@@ -22,39 +23,36 @@ const Chalkboard = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [randomQuote, setRandomQuote] = useState("");
   const scrollableDivRef = useRef<HTMLDivElement>(null);
-  const quotes = [
-    "Education is the most powerful weapon.",
-    "An investment in knowledge pays the best interest.",
-    "Learning never exhausts the mind.",
-    "The best way to predict your future is to create it.",
-    "Your attitude, not your aptitude, will determine your altitude.",
-  ];
-
-  const announcements = [
-    "Math test moved to next Monday.",
-    "Submit your English essay by midnight!",
-    "Science fair next Tuesday. Register your projects.",
-    "Parent-Teacher conferences next Thursday.",
-    "Field trip to the museum on the 15th. Submit permission slips by Friday.",
-    "Guest lecture on renewable energy this Friday.",
-    "Extra credit assignments due next Wednesday.",
-    "Library open until 6 PM on Wednesdays for study sessions.",
-    "Chess club meets every Tuesday at 4 PM in room 101.",
-    "SAT prep classes start next week. Sign up with your counselor.",
-  ];
-
+  const [announcements, setannouncements] = useState<AnnouncementType[]|null>(null)
+  
   // Pick a random quote on component mount
   useEffect(() => {
+    const quotes = [
+      "Education is the most powerful weapon.",
+      "An investment in knowledge pays the best interest.",
+      "Learning never exhausts the mind.",
+      "The best way to predict your future is to create it.",
+      "Your attitude, not your aptitude, will determine your altitude.",
+    ];
     setRandomQuote(quotes[Math.floor(Math.random() * quotes.length)]);
   }, []);
-
+  useEffect(() => {
+    const fetchannouncement = async ()=>{
+      const res = await getannouncements();
+      if(res){
+        setannouncements(res);
+      }
+    }
+    fetchannouncement();
+  }, [])
+  
   const handleZoomIn = () => setZoomedIn(true);
   const handleZoomOut = () => setZoomedIn(false);
 
   const handleNext = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if(currentIndex+2 === announcements.length) return;
+    if(currentIndex+2 === announcements?.length) return;
     e.stopPropagation();
-    if (currentIndex < announcements.length) {
+    if (announcements && currentIndex < announcements.length) {
       setCurrentIndex((prev) => prev + 1);
     }
     scrollToBottom();
@@ -118,12 +116,12 @@ const scrollToBottom = () => {
                   <p style={{color:randomColor}} className={`text-sm sm:text-xl text-[${randomColor}] font-semibold`}>
                     &quot;{randomQuote}&quot;
                   </p>
-                  <TextGenerateEffect className="text-sm sm:text-lg" key={currentIndex} words={announcements[currentIndex]} />
+                  <TextGenerateEffect className="text-sm sm:text-lg" key={currentIndex} words={announcements?announcements[currentIndex].title:""} />
                 </>
             ) : (
                 <>
-                <TextGenerateEffect className="text-sm sm:text-lg" key={currentIndex} words={announcements[currentIndex]} />
-                <TextGenerateEffect className="text-sm sm:text-lg" key={currentIndex+1} words={announcements[currentIndex+1]} /> 
+                <TextGenerateEffect className="text-sm sm:text-lg" key={currentIndex} words={announcements?announcements[currentIndex].title:""} />
+                <TextGenerateEffect className="text-sm sm:text-lg" key={currentIndex+1} words={announcements?announcements[currentIndex+1].title:""} /> 
               </>
             )}</div>
               <Flex justifyContent={"space-between"} mt={3}>
@@ -135,10 +133,10 @@ const scrollToBottom = () => {
                   variant="outline"
                   _hover={{boxShadow:"0 0 3px #dcdcdc"}}
                   />
-                <Text>{currentIndex+1} of {announcements.length-1}</Text>
+                <Text>{currentIndex+1} of {announcements?announcements.length-1:0}</Text>
                 <IconButton
                 as={ArrowBigRightDash}
-                disabled={currentIndex+2 === announcements.length}
+                disabled={currentIndex+2 === announcements?.length}
                 onClick={(e)=>handleNext(e)}
                   size="xs"
                   variant="outline"
