@@ -180,3 +180,23 @@ export async function deletematerial(id:string):Promise<boolean>{
         return false;
     }
 }
+export async function addannouncement(title:string):Promise<boolean>{
+    try {
+        const response:AxiosResponse<MyAxios<string>> = await api.post('/api/v1/announcement/add',{
+           title:title
+        })
+        return response.data.status;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+export async function deleteannouncement(id:string):Promise<boolean>{
+    try {
+        const response:AxiosResponse<MyAxios<string>> = await api.delete('/api/v1/announcement/delete/'+id)
+        return response.data.status;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}

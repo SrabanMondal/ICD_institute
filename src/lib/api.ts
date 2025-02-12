@@ -21,6 +21,11 @@ export type LevelData={
     id: string,
     materials:Materials[]
 }
+export type AnnouncementType={
+    _id:string
+    title: string,
+    date: string
+}
 const api = process.env.NEXT_PUBLIC_API_URL
 export async function getSubject(): Promise<null|SubjectType[]> {
     try{
@@ -45,6 +50,15 @@ export async function getTopics(subjectid:string): Promise<|null|TopicsType[]> {
 export async function getLevels(topicid:string): Promise<null|LevelData[]> {
     try{
         const response:AxiosResponse<MyAxios<LevelData[]>> = await axios.get(api+'/api/v1/level/material/'+topicid);
+       return response.data.message
+    } catch(error){
+        console.error('Error fetching subjects:', error);
+        return null;
+    }
+}
+export async function getannouncements(): Promise<null|AnnouncementType[]> {
+    try{
+        const response:AxiosResponse<MyAxios<AnnouncementType[]>> = await axios.get(api+'/api/v1/announcement/get');
        return response.data.message
     } catch(error){
         console.error('Error fetching subjects:', error);

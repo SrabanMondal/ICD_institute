@@ -229,7 +229,13 @@ const [newlevel, setnewlevel] = useState("")
             <AccordionRoot collapsible  className="mb-2 space-y-4 rounded-lg">
           {levels && levels.map((level) => (
               <AccordionItem key={level.id} value={level.name} className="border border-gray-700 rounded-lg overflow-hidden bg-gray-800/60 shadow-md">
-                <AccordionItemTrigger as={'div'} className="px-4 py-2 w-full bg-gray-700 hover:bg-gray-600 rounded-lg transition-all">
+                <AccordionItemTrigger as={'div'} role="button" tabIndex={0} // Makes it focusable for keyboard users
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  e.currentTarget.click();
+                }
+              }} className="px-4 py-2 w-full bg-gray-700 hover:bg-gray-600 rounded-lg transition-all">
                 <div className="flex w-full text-white text-left text-lg font-semibold flex-row justify-between">
                 <div className="w-fit" onClick={(e)=>e.stopPropagation()} >
                <Editable.Root     activationMode="dblclick" selectOnFocus={false} defaultValue={level.name} className="flex-grow" onValueChange={(e)=>handleLevelChange(level.id,e.value)}>
@@ -237,17 +243,17 @@ const [newlevel, setnewlevel] = useState("")
                 <EditableInput  className="bg-gray-800 text-white rounded px-2 text-lg" />
                 <Editable.Control  >
         <Editable.EditTrigger asChild>
-          <IconButton variant="ghost" size="xs">
+          <IconButton  variant="ghost" size="xs">
             <LuPencilLine />
           </IconButton>
         </Editable.EditTrigger>
-        <Editable.CancelTrigger asChild>
+        <Editable.CancelTrigger asChild >
           <IconButton variant="outline" size="xs">
             <LuX />
           </IconButton>
         </Editable.CancelTrigger>
-        <Editable.SubmitTrigger    asChild >
-          <IconButton   onClick={(e)=>handleLevelEdit(e,level.id)}>
+        <Editable.SubmitTrigger   asChild >
+          <IconButton onClick={(e)=>handleLevelEdit(e,level.id)}>
             <LuCheck />
           </IconButton>
         </Editable.SubmitTrigger>
@@ -300,7 +306,7 @@ const [newlevel, setnewlevel] = useState("")
             </a>
             <button
                   onClick={(e) => handleMaterialDelete(e,material.id)}
-                  className="rounded-md text-red-400 hover:text-red-600 hover:bg-gray-200/20 transition-all"
+                  className="rounded-md p-2 text-red-400 hover:text-red-600 hover:bg-gray-200/20 transition-all"
                   >
                   <Trash2 size={18} />
                 </button>

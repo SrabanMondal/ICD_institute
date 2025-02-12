@@ -1,10 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Patrick_Hand } from "next/font/google";
-const subjects = [
-  { name: "Math", link: "/math" },
-  { name: "Reasoning", link: "/reasoning" },
-  { name: "English", link: "/english" },
-];
+import { getSubject } from "@/lib/api";
 const pat = Patrick_Hand({
   weight: "400",
   subsets:['latin']
@@ -12,6 +8,17 @@ const pat = Patrick_Hand({
 )
 
 const StickyNoticeBoard = () => {
+  const [subjects, setsubjects] = useState<string[]>([""]);
+  useEffect(() => {
+      const getSubjects = async () => {
+        const data = await getSubject();
+        if(data){
+         const sub = data.map(d=>d.name)
+          setsubjects(sub);
+        }
+      };
+      getSubjects();
+    }, []);
   const stickyimg = ["url('/sticky2.png')","url('/sticky.png')","url('/sticky3.png')","url('/sticky4.png')"
                       ,"url('/sticky6.png')","url('/sticky8.png')"]
   return (
@@ -37,7 +44,7 @@ const StickyNoticeBoard = () => {
           {subjects.map((subject, index) => (
             <a
               key={index}
-              href={subject.link}
+              href={'/'+subject}
               className={`absolute w-[100px] h-[100px]  sm:w-[130px] sm:h-[130px] flex justify-center items-center rounded-lg p-2`}
               style={{
                 position: "absolute",
@@ -50,7 +57,7 @@ const StickyNoticeBoard = () => {
                 textAlign: "center",
               }}
             >
-              <p className="text-md md:text-md font-bold text-[#2c3e50]">{subject.name}</p>
+              <p className="text-md md:text-md font-bold text-[#2c3e50]">{subject}</p>
             </a>
           ))}
         </div>

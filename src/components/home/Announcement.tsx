@@ -78,7 +78,8 @@ const scrollToBottom = () => {
   return (
     <div style={{fontFamily:pat.style.fontFamily}} className="overflow-hidden w-full h-[60vh] sm:h-[80vh]">
       <motion.div
-        className={`overflow-hidden relative h-full w-full bg-class1 sm:bg-class bg-cover bg-center flex items-start justify-center bg-no-repeat ${
+      style={{backgroundImage:window.innerWidth<768?'url(/class.webp)':'url(/class.avif)'}}
+        className={`overflow-hidden relative h-full w-full bg-cover bg-center flex items-start justify-center bg-no-repeat ${
           zoomedIn ? "cursor-pointer" : "cursor-default"
         }`}
         

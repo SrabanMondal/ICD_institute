@@ -6,7 +6,7 @@ import {
   MenuRoot,
   MenuTrigger,
 } from "@/components/ui/menu";
-import { Home } from "lucide-react";
+import { Home, Menu } from "lucide-react";
 import Link from "next/link";
 import {  Playfair_Display } from "next/font/google";
 import { getSubject, SubjectType } from "@/lib/api";
@@ -94,7 +94,7 @@ const Header = () => {
           {isMobile && (
             <MenuRoot>
               <MenuTrigger _focus={{outline:'none', boxShadow: 'none'}}>
-                Menu
+                <Menu size={20}/>
               </MenuTrigger>
               <MenuContent  >
                 <MenuItem  value="About" ><Link href="/about" className=" focus:outline-none">About</Link></MenuItem>

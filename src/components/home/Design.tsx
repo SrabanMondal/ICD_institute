@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { BackgroundBeams } from "../ui/background-beams";
-
+import { useState } from "react";
 const elements = [
   { src: "/bulb.png", top: "15%", left: "15%", delay: 0 },
   { src: "/book.png", top: "18%", left: "70%", delay: 0.5 },
@@ -15,6 +15,13 @@ const elements = [
 const quote2 = "a path to success.";
 const quote1 = "A gateway to wisdom,";
 const FloatingKnowledgeGalaxy = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkScreenSize = () => setIsMobile(window.innerWidth < 640); // 'sm' in Tailwind (640px)
+    checkScreenSize(); // Check initially
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
   return (
     <div
       className="relative w-full h-[60vh] sm:h-[75vh] flex justify-center items-center overflow-hidden"
@@ -34,8 +41,8 @@ const FloatingKnowledgeGalaxy = () => {
           alt="Knowledge Item"
           className="absolute w-[80px] sm:w-[100px] md:w-[120px]"
           style={{ top: el.top, left: el.left }}
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 3, delay: el.delay, ease: "easeInOut" }}
+          animate={!isMobile ? { y: [0, 10, 0] } : {}} // Disable animation on mobile
+          transition={!isMobile ? { repeat: Infinity, duration: 3, delay: el.delay, ease: "easeInOut" } : {}}
         />
       ))}
 
@@ -83,7 +90,7 @@ const FloatingKnowledgeGalaxy = () => {
         </div>
       </div>
 
-      <BackgroundBeams />
+      <BackgroundBeams className="hidden sm:block" />
     </div>
   );
 };
