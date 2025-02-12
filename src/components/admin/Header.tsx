@@ -36,7 +36,7 @@ const AdminHeader = () => {
     const res = await addannouncement(newAnnouncement);
     if(res){
       toast.success("Added announcement")
-      setrefresh(true);
+      setrefresh(prev=>!prev);
     }else{
       toast.error("Failed to add announcement")
     }
@@ -45,7 +45,7 @@ const AdminHeader = () => {
     const res = await deleteannouncement(id);
     if(res){
       toast.success("Deleted announcement")
-      setrefresh(true);
+      setrefresh(prev=>!prev);
     } else{
       toast.error("Failed to delete announcement")
     }
