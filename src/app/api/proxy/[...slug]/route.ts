@@ -27,10 +27,10 @@ async function handleRequest(req: NextRequest) {
       },
       data: req.method !== "GET" ? await req.json().catch(() => undefined) : undefined,
     });
-    console.log(response.data)
+    //console.log(response.data)
     return NextResponse.json(response.data); // Send only response.data
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     return NextResponse.json(
       { status:false,message: error },
       { status:  500 }

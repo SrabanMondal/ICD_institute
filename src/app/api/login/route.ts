@@ -6,7 +6,6 @@ export async function POST(req:Request){
     try {
         
         const {email, password} = await req.json();
-       console.log("login",email,password);
         if(!email || !password){
             return NextResponse.json({ success: false, message: "Incomplete data" }, { status: 400 });
         }

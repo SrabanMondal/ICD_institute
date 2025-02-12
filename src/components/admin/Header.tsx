@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button, Input, VStack, HStack, Text, IconButton } from "@chakra-ui/react";
-import { Trash } from "lucide-react";
+import { Trash, X } from "lucide-react";
 import { AnnouncementType, getannouncements } from "@/lib/api";
 import { addannouncement, deleteannouncement } from "@/lib/AdminApi2";
 import { toast } from "react-toastify";
@@ -67,7 +67,7 @@ const AdminHeader = () => {
       <DialogTrigger >
         View Announcements
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="rounded-lg">
         <DialogHeader>
           <DialogTitle>Announcements</DialogTitle>
         </DialogHeader>
@@ -103,7 +103,7 @@ const AdminHeader = () => {
             <Button colorScheme="green" onClick={handleAdd}>Add</Button>
           </HStack>
           <DialogCloseTrigger>
-            Close
+            <X/>
           </DialogCloseTrigger>
         </DialogFooter>
       </DialogContent>

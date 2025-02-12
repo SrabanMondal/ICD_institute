@@ -39,6 +39,7 @@ const Chalkboard = () => {
   useEffect(() => {
     const fetchannouncement = async ()=>{
       const res = await getannouncements();
+      console.log(res)
       if(res){
         setannouncements(res);
       }
@@ -50,7 +51,7 @@ const Chalkboard = () => {
   const handleZoomOut = () => setZoomedIn(false);
 
   const handleNext = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if(currentIndex+2 === announcements?.length) return;
+    if(currentIndex+2 === announcements?.length || announcements?.length==1) return;
     e.stopPropagation();
     if (announcements && currentIndex < announcements.length) {
       setCurrentIndex((prev) => prev + 1);
@@ -116,12 +117,12 @@ const scrollToBottom = () => {
                   <p style={{color:randomColor}} className={`text-sm sm:text-xl text-[${randomColor}] font-semibold`}>
                     &quot;{randomQuote}&quot;
                   </p>
-                  <TextGenerateEffect className="text-sm sm:text-lg" key={currentIndex} words={announcements?announcements[currentIndex].title:""} />
+                  <TextGenerateEffect className="text-sm sm:text-lg" key={currentIndex} words={announcements&& announcements.length>0?announcements[currentIndex].title:""} />
                 </>
             ) : (
                 <>
-                <TextGenerateEffect className="text-sm sm:text-lg" key={currentIndex} words={announcements?announcements[currentIndex].title:""} />
-                <TextGenerateEffect className="text-sm sm:text-lg" key={currentIndex+1} words={announcements?announcements[currentIndex+1].title:""} /> 
+                <TextGenerateEffect className="text-sm sm:text-lg" key={currentIndex} words={announcements&& announcements.length>0?announcements[currentIndex].title:""} />
+                <TextGenerateEffect className="text-sm sm:text-lg" key={currentIndex+1} words={announcements && announcements.length>0?announcements[currentIndex+1].title:""} /> 
               </>
             )}</div>
               <Flex justifyContent={"space-between"} mt={3}>
@@ -133,10 +134,10 @@ const scrollToBottom = () => {
                   variant="outline"
                   _hover={{boxShadow:"0 0 3px #dcdcdc"}}
                   />
-                <Text>{currentIndex+1} of {announcements?announcements.length-1:0}</Text>
+                <Text>{currentIndex+1} of {announcements&& announcements.length>1?announcements.length-1:1}</Text>
                 <IconButton
                 as={ArrowBigRightDash}
-                disabled={currentIndex+2 === announcements?.length}
+                disabled={announcements?.length==1 ||currentIndex+2 === announcements?.length}
                 onClick={(e)=>handleNext(e)}
                   size="xs"
                   variant="outline"
