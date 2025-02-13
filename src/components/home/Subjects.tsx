@@ -44,7 +44,7 @@ const StickyNoticeBoard = () => {
           {subjects.map((subject, index) => (
             <a
               key={index}
-              href={'/'+subject}
+              href={'/'+subject.toUpperCase()}
               className={`absolute w-[100px] h-[100px]  sm:w-[130px] sm:h-[130px] flex justify-center items-center rounded-lg p-2`}
               style={{
                 position: "absolute",

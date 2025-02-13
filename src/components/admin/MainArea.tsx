@@ -81,6 +81,7 @@ const [newlevel, setnewlevel] = useState("")
         if(response){
             toast.success("New topic added",{ position: "top-right" });
             setrefresh(prev=>!prev)
+            setnewtopic("");
         } else{
           toast.error("Failed to add new topic",{ position: "top-right" });
         }
@@ -90,6 +91,7 @@ const [newlevel, setnewlevel] = useState("")
         if(response){
             toast.success("New level added",{ position: "top-right" });
             setrefresh2(prev=>!prev)
+            setnewlevel("");
         } else{
           toast.error("Failed to add new level",{ position: "top-right" });
         }

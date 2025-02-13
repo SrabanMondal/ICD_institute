@@ -19,7 +19,7 @@ const Subject = ({ subject }:{subject:string}) => {
     if(data){
       setsubjects(data)
       const lsub = data.map(subject=> subject.name.toLowerCase());
-      if (lsub.includes(subject)) {
+      if (lsub.includes(subject.toLowerCase())) {
         setValidSubject(true);
       } else {
         setValidSubject(false);

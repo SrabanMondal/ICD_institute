@@ -20,6 +20,16 @@ const MainArea = ({ topic }:{topic:string|null}) => {
       fetchtopics(topic);
     }
   }, [topic])
+  const getGoogleDriveFileId = (link:string) => {
+    if (!link || !link.includes("/d/")) {
+        return ""; // or handle it differently
+    }
+    const parts = link.split("/d/");
+    if (parts.length < 2 || !parts[1].includes("/")) {
+        return ""; // Invalid format
+    }
+    return parts[1].split("/")[0];
+};
   return (
     <div style={{backgroundImage:'url("https://img.pikbest.com/wp/202347/immersive-education-3d-books-against-blurred-background-with-modern-flat-isometric-design-back-to-school-theme_9761108.jpg!w700wp")',backgroundRepeat:'no-repeat',backgroundSize:'cover', backgroundPosition:"center"}} className="flex-1 ">
       <div style={{fontFamily:mont.style.fontFamily}} className="bg-[#000000] w-full h-full p-4 overflow-y-auto bg-opacity-80">
@@ -34,7 +44,7 @@ const MainArea = ({ topic }:{topic:string|null}) => {
             </AccordionItemTrigger>
             <AccordionItemContent style={{background:'#19191990'}} className=" p-3 rounded-lg backdrop-blur-md shadow-custom">
               <ul className="list-disc px-5 text-[#f0f0f0]">
-                {level.materials.map((material, idx) => (
+                {level.materials && level.materials.length>0 && level.materials.map((material, idx) => (
                   <li key={idx} className="mb-2 ">
                   <div className="flex justify-between items-center">
         <a
@@ -47,8 +57,8 @@ const MainArea = ({ topic }:{topic:string|null}) => {
         </a>
         <a
           download={true}
-          href={`https://drive.google.com/uc?export=download&id=${material.link.split("/d/")[1].split("/")[0]}`}
-          className="text-blue-500 text-sm hover:text-blue-400 ml-4"
+          href={`https://drive.google.com/uc?export=download&id=${getGoogleDriveFileId(material.link)}`}
+          className="text-blue-500 text-sm hover:text-blue-400 ml-4 hover:underline"
         >
           Download
         </a>
