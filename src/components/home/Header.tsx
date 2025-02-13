@@ -6,10 +6,11 @@ import {
   MenuRoot,
   MenuTrigger,
 } from "@/components/ui/menu";
-import { Home, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import {  Playfair_Display } from "next/font/google";
 import { getSubject, SubjectType } from "@/lib/api";
+import Image from "next/image";
 //import { Provider } from "../ui/provider";
 const inter2 = Playfair_Display({
   weight: "variable",
@@ -42,7 +43,7 @@ const Header = () => {
 
           {/* Logo and Home Title */}
           <Flex align="center" gap={3}>
-            <Home />
+             <Image src="/logo.png" alt="Logo" width={40} height={40} />
             <h1 className="text-xl font-bold text-shadow-custom" style={{ fontFamily:inter2.style.fontFamily }}>
               Home
             </h1>
