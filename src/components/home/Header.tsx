@@ -79,9 +79,6 @@ const Header = () => {
           {/* Navigation Links */}
           {!isMobile && (
             <Flex as="nav" gap={6}>
-              <Link href="/about" className=" transition-all ease-linear duration-300 text=[#9ca3af] hover:text-[#d4af37] transform hover:scale-110 hover:text-shadow-custom2">
-                About Us
-              </Link>
               <Link href="/adminlogin" className=" transition-all ease-linear duration-300 text=[#9ca3af] hover:text-[#d4af37] transform hover:scale-110 hover:text-shadow-custom2">
                 Admin
               </Link>
@@ -98,7 +95,6 @@ const Header = () => {
                 <Menu size={20}/>
               </MenuTrigger>
               <MenuContent  >
-                <MenuItem  value="About" ><Link href="/about" className=" focus:outline-none">About</Link></MenuItem>
                 <MenuItem value="support">
                  <Link href={'/adminlogin'}>Admin</Link>
                 </MenuItem>
